@@ -1,6 +1,6 @@
 {
   "name": "vue-web-cam",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Webcam component for Vuejs applications",
   "author": {
     "name": "Mohammad Shoriful Islam Ronju",
@@ -8,11 +8,11 @@
     "url": "https://github.com/smronju"
   },
   "contributors": [
-      {
-          "name": "Vincent Gabriel",
-          "email": "vadimg88@gmail.com",
-          "url": "https://github.com/vinceg"
-      }
+    {
+      "name": "Vincent Gabriel",
+      "email": "vadimg88@gmail.com",
+      "url": "https://github.com/vinceg"
+    }
   ],
   "scripts": {
     "build": "webpack -p --config build/webpack.prod.conf.js",
@@ -22,9 +22,9 @@
     "vue": "^2.0.1"
   },
   "repository": {
-        "type": "git",
-        "url": "https://github.com/vinceg/vue-web-cam"
-    },
+    "type": "git",
+    "url": "https://github.com/vinceg/vue-web-cam"
+  },
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.0.0",
