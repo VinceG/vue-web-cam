@@ -21,7 +21,7 @@ npm install vue-web-cam --save
 ```
 
 ```javascript
-import Webcam from './Webcam'
+import Webcam from 'vue-web-cam/src/webcam'
 
 export default {
   components: {
@@ -60,7 +60,7 @@ notsupported     | void     | emitted when the browser does not support this fea
 ```
 
 ```javascript
-import Webcam from './Webcam'
+import Webcam from 'vue-web-cam/src/webcam'
 
 export default {
   data() {
