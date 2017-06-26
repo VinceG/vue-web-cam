@@ -1,5 +1,5 @@
 <template>
-  <video ref="video" :width="this.width" :height="this.height" :src="this.source" :autoplay="this.true"></video>
+  <video ref="video" :width="this.width" :height="this.height" :src="this.source" :autoplay="this.autoplay"></video>
 </template>
 
 <script>
@@ -22,7 +22,7 @@ export default {
         },
         autoplay: {
             type: Boolean,
-            default: false
+            default: true
         },
         screenshotFormat: {
           type: String,
