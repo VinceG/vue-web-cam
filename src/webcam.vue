@@ -3,6 +3,23 @@
 </template>
 
 <script>
+let legacyGetUserMediaSupport = (constraints) => {
+
+    // First get ahold of the legacy getUserMedia, if present
+    let getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia);
+
+    // Some browsers just don't implement it - return a rejected promise with an error
+    // to keep a consistent interface
+    if (!getUserMedia) {
+      return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+    }
+
+    // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
+    return new Promise(function(resolve, reject) {
+      getUserMedia.call(navigator, constraints, resolve, reject);
+    });
+};
+
 export default {
     data () {
         return {
@@ -30,38 +47,32 @@ export default {
         }
     },
     mounted() {
-        if (!this.hasMedia()) {
-            this.$emit('notsupported');
-            return;
-        }
+        this.setupMedia();
 
-        this.requestMedia();
-
-        if (navigator.getUserMedia) {
-            navigator.getUserMedia({ video: true }, stream => {
-            this.source = window.URL.createObjectURL(stream);
-            this.stream = stream;
-            this.$emit('started', stream);
-        }, error => {
+        navigator.mediaDevices.getUserMedia({ video: true}).then( (stream) => {
+            try {
+                this.source = window.URL.createObjectURL(stream);
+                this.stream = stream;
+                this.$emit('started', stream);
+            } catch (err) {
+                this.$refs.video.srcObject = stream;
+                this.stream = stream;
+                this.$emit('started', stream);
+            }
+        }).catch((error) => {
             this.$emit('error', error);
-          });
-        }
+        });
     },
     methods: {
-        hasMedia() {
-            return !!this.getMedia();
-        },
-        getMedia() {
-            return (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia);
-        },
-        requestMedia() {
-            navigator.getUserMedia = this.getMedia();
+        setupMedia() {
+            if (navigator.mediaDevices === undefined) {
+              navigator.mediaDevices = {};
+            }
+            if (navigator.mediaDevices.getUserMedia === undefined) {
+              navigator.mediaDevices.getUserMedia = legacyGetUserMediaSupport;
+            }
         },
         capture() {
-            if (!this.hasMedia()) {
-                this.$emit('notsupported');
-                return null;
-            }
             return this.getCanvas().toDataURL(this.screenshotFormat);
         },
         getCanvas() {
