@@ -4,8 +4,8 @@
 
 # vue-web-cam
 
-[![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/vue-web-cam)
-[![npm](https://img.shields.io/npm/dm/localeval.svg)](https://www.npmjs.com/package/vue-web-cam)
+[![npm](https://img.shields.io/npm/v/vue-web-cam.svg)](https://www.npmjs.com/package/vue-web-cam)
+[![npm](https://img.shields.io/npm/dm/vue-web-cam.svg)](https://www.npmjs.com/package/vue-web-cam)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
