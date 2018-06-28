@@ -51,7 +51,7 @@ export default {
 
         navigator.mediaDevices.getUserMedia({ video: true}).then( (stream) => {
             try {
-                this.source = window.URL.createObjectURL(stream);
+                this.source = window.HTMLMediaElement.srcObject(stream);
                 this.stream = stream;
                 this.$emit('started', stream);
             } catch (err) {
