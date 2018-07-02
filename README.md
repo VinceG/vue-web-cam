@@ -2,6 +2,10 @@
     <img width="150" src="assets/logo.png">
 </p>
 
+<p align="center">
+    <img src="assets/splash.png">
+</p>
+
 # vue-web-cam
 
 [![npm](https://img.shields.io/npm/v/vue-web-cam.svg)](https://www.npmjs.com/package/vue-web-cam)
@@ -31,6 +35,12 @@ Vue.use(WebCam)
 // or
 import {WebCam} from 'vue-web-cam'
 Vue.component(WebCam.name, WebCam)
+```
+
+## Testing & Dev
+
+```
+npm run dev
 ```
 
 ### Props
