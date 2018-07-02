@@ -118,7 +118,7 @@ export default {
         this.$refs.video.srcObject = stream;
       } else {
         // old broswers
-        this.source = window.URL.createObjectURL(stream);
+        this.source = window.HTMLMediaElement.srcObject(stream);
       }
 
       this.$emit('started', stream);

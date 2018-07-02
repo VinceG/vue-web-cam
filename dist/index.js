@@ -198,7 +198,7 @@ exports.default = {
       if ('srcObject' in this.$refs.video) {
         this.$refs.video.srcObject = stream;
       } else {
-        this.source = window.URL.createObjectURL(stream);
+        this.source = window.HTMLMediaElement.srcObject(stream);
       }
 
       this.$emit('started', stream);
