@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="150" src="src/logo.png">
+    <img width="150" src="assets/logo.png">
 </p>
 
 # vue-web-cam
@@ -17,80 +17,49 @@ for browser compatibility.
 
 ```
 npm install vue-web-cam --save
+
+yarn add vue-web-cam
 ```
 
 ## Usage
 
-```html
-<template>
-  <div id="app" class="component">
-    <webcam ref="webcam"></webcam>
-  </div>
-</template>
-```
-
 ```javascript
-import Webcam from 'vue-web-cam/src/webcam'
+import Vue from 'vue'
+import WebCam from 'vue-web-cam'
 
-export default {
-  components: {
-    Webcam
-  }
-}
+Vue.use(WebCam)
+// or
+import {WebCam} from 'vue-web-cam'
+Vue.component(WebCam.name, WebCam)
 ```
 
 ### Props
 
-| prop             | type    | default      | notes                   |
-| ---------------- | ------- | ------------ | ----------------------- |
-| height           | number  | 500          | height of video element |
-| width            | number  | 500          | width of video element  |
-| autoplay         | boolean | true         | autoplay attribute      |
-| screenshotFormat | string  | 'image/jpeg' | format of screenshot    |
+| prop             | type    | default      | notes                     |
+| ---------------- | ------- | ------------ | ------------------------- |
+| height           | number  | 500          | height of video element   |
+| width            | number  | 500          | width of video element    |
+| autoplay         | boolean | true         | autoplay attribute        |
+| screenshotFormat | string  | 'image/jpeg' | format of screenshot      |
+| deviceId         | string  | null         | currently selected camera |
 
 ### Events
 
-| name         | param  | notes                                                         |
-| ------------ | ------ | ------------------------------------------------------------- |
-| started      | stream | emitted once the stream has started                           |
-| error        | error  | emitted if the stream failed to start with the error returned |
-| notsupported | void   | emitted when the browser does not support this feature        |
+| name           | param    | notes                                                         |
+| -------------- | -------- | ------------------------------------------------------------- |
+| started        | stream   | emitted once the stream has started                           |
+| stopped        | stream   | emitted once the stream has stopped                           |
+| error          | error    | emitted if the stream failed to start with the error returned |
+| notsupported   | error    | emitted when the browser does not support this feature        |
+| cameras        | cameras  | emitted when a list of all cameras available is loaded        |
+| camera-change  | deviceId | emitted when camera change occurs                             |
 
 ### Methods
 
-`capture` - Returns a base64 encoded string of the current webcam image. Example:
-
-```html
-<div id="app" class="component">
-  <webcam ref="webcam"></webcam>
-  <img :src="this.img" style="width:500px;height:500px;" />
-  <button type="button" @click="changeCamera">Change Camera</button>
-  <button type="button" @click="photo">Capture Photo</button>
-</div>
-```
-
-```javascript
-import Webcam from 'vue-web-cam/src/webcam'
-
-export default {
-  data() {
-      return {
-          img: null
-      };
-  },
-  methods: {
-    changeCamera() {
-      this.$refs.webcam.changeCamera();
-    },
-    photo() {
-      this.img = this.$refs.webcam.capture();
-    }
-  },
-  components: {
-    Webcam
-  }
-}
-```
+| name           | param    | notes                                                                   |
+| -------------- | -------- | ----------------------------------------------------------------------- |
+| capture        | void     | Capture the current image through the webcam as base64 encoded string   |
+| changeCamera   | deviceId   | change the currently selected camera. Must pass in the device ID        |
 
 ## License
 

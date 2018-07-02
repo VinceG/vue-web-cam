@@ -1,35 +1,16 @@
 <template>
-  <video ref="video" :width="this.width" :height="this.height" :src="this.source" :autoplay="this.autoplay"></video>
+  <video ref="video" 
+        :width="width" 
+        :height="height" 
+        :src="source" 
+        :autoplay="autoplay"/>
 </template>
 
 <script>
-let legacyGetUserMediaSupport = constraints => {
-  // First get ahold of the legacy getUserMedia, if present
-  let getUserMedia =
-    navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia ||
-    navigator.oGetUserMedia;
-
-  // Some browsers just don't implement it - return a rejected promise with an error
-  // to keep a consistent interface
-  if (!getUserMedia) {
-    return Promise.reject(
-      new Error('getUserMedia is not implemented in this browser')
-    );
-  }
-
-  // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
-  return new Promise(function(resolve, reject) {
-    getUserMedia.call(navigator, constraints, resolve, reject);
-  });
-};
-
 export default {
+  name: 'vue-web-cam',
   data() {
     return {
-      selectedCamera: 0,
       stream: '',
       source: '',
       canvas: null,
@@ -38,11 +19,11 @@ export default {
   },
   props: {
     width: {
-      type: Number,
-      default: 500
+      type: [Number, String],
+      default: "100%"
     },
     height: {
-      type: Number,
+      type: [Number, String],
       default: 500
     },
     autoplay: {
@@ -52,62 +33,81 @@ export default {
     screenshotFormat: {
       type: String,
       default: 'image/jpeg'
+    },
+    deviceId: {
+      type: String,
+      default: null
+    }
+  },
+  watch: {
+    deviceId: function(id) {
+      this.changeCamera(id);
     }
   },
   mounted() {
     this.setupMedia();
+  },
+  methods: {
+    legacyGetUserMediaSupport() {
+      return constraints => {
+        // First get ahold of the legacy getUserMedia, if present
+        let getUserMedia =
+          navigator.getUserMedia ||
+          navigator.webkitGetUserMedia ||
+          navigator.mozGetUserMedia ||
+          navigator.msGetUserMedia ||
+          navigator.oGetUserMedia;
 
-    navigator.mediaDevices
+        // Some browsers just don't implement it - return a rejected promise with an error
+        // to keep a consistent interface
+        if (!getUserMedia) {
+          return Promise.reject(
+            new Error('getUserMedia is not implemented in this browser')
+          );
+        }
+
+        // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
+        return new Promise(function(resolve, reject) {
+          getUserMedia.call(navigator, constraints, resolve, reject);
+        });
+      };
+    },
+    setupMedia() {
+      if (navigator.mediaDevices === undefined) {
+        navigator.mediaDevices = {};
+      }
+      if (navigator.mediaDevices.getUserMedia === undefined) {
+        navigator.mediaDevices.getUserMedia = this.legacyGetUserMediaSupport();
+      }
+
+      this.loadCameras();
+    },
+    loadCameras() {
+      navigator.mediaDevices
       .enumerateDevices()
       .then(
         deviceInfos => {
           for (var i = 0; i !== deviceInfos.length; ++i) {
             var deviceInfo = deviceInfos[i];
             if (deviceInfo.kind === 'videoinput') {
-              this.cameras.push({
-                name: deviceInfo.label || 'camera ' + (this.cameras.length + 1),
-                code: deviceInfo.deviceId
-              });
-            } //videoinput
-          } //for videoinputs
-        } //lambda function
-      )
-      .then(() => {
-        // after loading all the cameras, loads the first one
-        if (this.cameras.length != 0) {
-          this.loadCamera(0);
-        } else {
-          // no cameras == no support
-          alert('No webcam found!');
+              this.cameras.push(deviceInfo);
+            }
+          }
         }
-      });
-  },
-  methods: {
-    setupMedia() {
-      if (navigator.mediaDevices === undefined) {
-        navigator.mediaDevices = {};
-      }
-      if (navigator.mediaDevices.getUserMedia === undefined) {
-        navigator.mediaDevices.getUserMedia = legacyGetUserMediaSupport;
-      }
-    },
-    /**
-     * get the number of cameras
-     */
-    numberOfCameras() {
-      return this.cameras.length;
+      )
+      .then(() => this.$emit('cameras', this.cameras))
+      .catch(error => this.$emit('notsupported', error));
     },
     /**
      * change to a different camera stream, like front and back camera on phones
      */
-    changeCamera() {
-      // let's go to the next camera!
-      this.selectedCamera += 1;
-      if (this.selectedCamera >= this.cameras.length) {
-        this.selectedCamera = 0; // if over the length go back to the first one
+    changeCamera(deviceId) {
+      if(this.$refs.video !== null && this.$refs.video.srcObject) {
+        this.stopStreamedVideo(this.$refs.video);
       }
-      this.stopStreamedVideo(this.$refs.video);
-      this.loadCamera(this.selectedCamera); // load a different stream
+
+      this.$emit('camera-change', deviceId);
+      this.loadCamera(deviceId);
     },
     /**
      * load the stream to the
@@ -120,6 +120,8 @@ export default {
         // old broswers
         this.source = window.URL.createObjectURL(stream);
       }
+
+      this.$emit('started', stream);
     },
     /**
      * stop the selected streamed video to change camera
@@ -128,24 +130,23 @@ export default {
       let stream = videoElem.srcObject;
       let tracks = stream.getTracks();
 
-      tracks.forEach(function(track) {
+      tracks.forEach(track => {
         // stops the video track
         track.stop();
+        this.$emit('stopped', stream);
       });
       videoElem.srcObject = null;
     },
     /**
      * load the Camera passed as index!
      */
-    loadCamera(cameraIndex) {
+    loadCamera(device) {
       navigator.mediaDevices
         .getUserMedia({
-          video: { deviceId: { exact: this.cameras[cameraIndex].code } }
+          video: { deviceId: { exact: device } }
         })
         .then(stream => this.loadSrcStream(stream))
-        .catch(function(err) {
-          console.log(err.name + ': ' + err.message);
-        });
+        .catch(error => this.$emit('error', error));
     },
     capture() {
       return this.getCanvas().toDataURL(this.screenshotFormat);
