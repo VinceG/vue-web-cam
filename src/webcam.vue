@@ -14,6 +14,7 @@ export default {
       stream: '',
       source: '',
       canvas: null,
+      camerasListEmitted: false,
       cameras: []
     };
   },
@@ -76,11 +77,12 @@ export default {
       if (navigator.mediaDevices === undefined) {
         navigator.mediaDevices = {};
       }
+
       if (navigator.mediaDevices.getUserMedia === undefined) {
         navigator.mediaDevices.getUserMedia = this.legacyGetUserMediaSupport();
       }
 
-      this.loadCameras();
+      this.testMediaAccess();
     },
     loadCameras() {
       navigator.mediaDevices
@@ -95,7 +97,12 @@ export default {
           }
         }
       )
-      .then(() => this.$emit('cameras', this.cameras))
+      .then(() => {
+        if(!this.camerasListEmitted) {
+          this.$emit('cameras', this.cameras);
+          this.camerasListEmitted = true;
+        }
+      })
       .catch(error => this.$emit('notsupported', error));
     },
     /**
@@ -136,6 +143,15 @@ export default {
         this.$emit('stopped', stream);
       });
       videoElem.srcObject = null;
+    },
+    /**
+     * test access
+     */
+    testMediaAccess() {
+      navigator.mediaDevices
+        .getUserMedia({video: true})
+        .then(stream => this.loadCameras())
+        .catch(error => this.$emit('error', error));
     },
     /**
      * load the Camera passed as index!
