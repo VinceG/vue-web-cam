@@ -1,6 +1,6 @@
 {
   "name": "vue-web-cam",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Webcam component for Vuejs applications",
   "main": "dist/index.js",
   "author": {

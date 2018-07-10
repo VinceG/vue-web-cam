@@ -192,10 +192,7 @@ exports.default = {
       });
     },
     changeCamera: function changeCamera(deviceId) {
-      if (this.$refs.video !== null && this.$refs.video.srcObject) {
-        this.stopStreamedVideo(this.$refs.video);
-      }
-
+      this.stop();
       this.$emit('camera-change', deviceId);
       this.loadCamera(deviceId);
     },
@@ -219,6 +216,16 @@ exports.default = {
         _this2.$emit('stopped', stream);
       });
       videoElem.srcObject = null;
+    },
+    stop: function stop() {
+      if (this.$refs.video !== null && this.$refs.video.srcObject) {
+        this.stopStreamedVideo(this.$refs.video);
+      }
+    },
+    start: function start() {
+      if (this.deviceId) {
+        this.loadCamera(this.deviceId);
+      }
     },
     testMediaAccess: function testMediaAccess() {
       var _this3 = this;

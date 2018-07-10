@@ -24,6 +24,8 @@
           </div>
           <div class="col-md-12">
             <button type="button" class="btn btn-primary" @click="onCapture">Capture Photo</button>
+            <button type="button" class="btn btn-danger" @click="onStop">Stop Camera</button>
+            <button type="button" class="btn btn-success" @click="onStart">Start Camera</button>
           </div>
         </div>
       </div>
@@ -80,6 +82,12 @@ export default {
     },
     onStopped(stream) {
       console.log('On Stopped Event', stream);
+    },
+    onStop() {
+      this.$refs.webcam.stop();
+    },
+    onStart() {
+      this.$refs.webcam.start();
     },
     onError(error, stream) {
       console.log('On Error Event', error, stream);

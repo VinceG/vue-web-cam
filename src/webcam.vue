@@ -109,10 +109,7 @@ export default {
      * change to a different camera stream, like front and back camera on phones
      */
     changeCamera(deviceId) {
-      if(this.$refs.video !== null && this.$refs.video.srcObject) {
-        this.stopStreamedVideo(this.$refs.video);
-      }
-
+      this.stop();
       this.$emit('camera-change', deviceId);
       this.loadCamera(deviceId);
     },
@@ -143,6 +140,18 @@ export default {
         this.$emit('stopped', stream);
       });
       videoElem.srcObject = null;
+    },
+    // Stop the video
+    stop() {
+      if(this.$refs.video !== null && this.$refs.video.srcObject) {
+        this.stopStreamedVideo(this.$refs.video); 
+      }
+    },
+    // Start the video
+    start() {
+      if(this.deviceId) {
+        this.loadCamera(this.deviceId);
+      }
     },
     /**
      * test access
