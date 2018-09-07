@@ -1,9 +1,10 @@
 <template>
-  <video ref="video" 
-        :width="width" 
-        :height="height" 
-        :src="source" 
-        :autoplay="autoplay"/>
+  <video ref="video"
+        :width="width"
+        :height="height"
+        :src="source"
+        :autoplay="autoplay"
+        :playsinline="playsinline"/>
 </template>
 
 <script>
@@ -144,7 +145,7 @@ export default {
     // Stop the video
     stop() {
       if(this.$refs.video !== null && this.$refs.video.srcObject) {
-        this.stopStreamedVideo(this.$refs.video); 
+        this.stopStreamedVideo(this.$refs.video);
       }
     },
     // Start the video

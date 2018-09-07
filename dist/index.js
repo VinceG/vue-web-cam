@@ -364,7 +364,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": _vm.width,
       "height": _vm.height,
       "src": _vm.source,
-      "autoplay": _vm.autoplay
+      "autoplay": _vm.autoplay,
+      "playsinline": _vm.playsinline
     }
   })
 },staticRenderFns: []}
