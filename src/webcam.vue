@@ -39,6 +39,10 @@ export default {
     deviceId: {
       type: String,
       default: null
+    },
+    playsinline: {
+      type: Boolean,
+      default: true
     }
   },
   watch: {
