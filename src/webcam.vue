@@ -1,9 +1,10 @@
 <template>
-  <video ref="video" 
-        :width="width" 
-        :height="height" 
-        :src="source" 
-        :autoplay="autoplay"/>
+  <video ref="video"
+        :width="width"
+        :height="height"
+        :src="source"
+        :autoplay="autoplay"
+        :playsinline="playsinline"/>
 </template>
 
 <script>
@@ -38,6 +39,10 @@ export default {
     deviceId: {
       type: String,
       default: null
+    },
+    playsinline: {
+      type: Boolean,
+      default: true
     }
   },
   watch: {
@@ -144,7 +149,7 @@ export default {
     // Stop the video
     stop() {
       if(this.$refs.video !== null && this.$refs.video.srcObject) {
-        this.stopStreamedVideo(this.$refs.video); 
+        this.stopStreamedVideo(this.$refs.video);
       }
     },
     // Start the video
@@ -180,8 +185,8 @@ export default {
       let video = this.$refs.video;
       if (!this.ctx) {
         let canvas = document.createElement('canvas');
-        canvas.height = video.clientHeight;
-        canvas.width = video.clientWidth;
+        canvas.height = video.videoHeight;
+        canvas.width = video.videoWidth;
         this.canvas = canvas;
 
         this.ctx = canvas.getContext('2d');
