@@ -185,8 +185,8 @@ export default {
       let video = this.$refs.video;
       if (!this.ctx) {
         let canvas = document.createElement('canvas');
-        canvas.height = video.clientHeight;
-        canvas.width = video.clientWidth;
+        canvas.height = video.videoHeight;
+        canvas.width = video.videoWidth;
         this.canvas = canvas;
 
         this.ctx = canvas.getContext('2d');
