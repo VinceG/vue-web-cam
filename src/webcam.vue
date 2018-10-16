@@ -12,8 +12,7 @@ export default {
   name: 'vue-web-cam',
   data() {
     return {
-      stream: '',
-      source: '',
+      source: null,
       canvas: null,
       camerasListEmitted: false,
       cameras: []
@@ -138,13 +137,15 @@ export default {
     stopStreamedVideo(videoElem) {
       let stream = videoElem.srcObject;
       let tracks = stream.getTracks();
-
+      
       tracks.forEach(track => {
         // stops the video track
         track.stop();
         this.$emit('stopped', stream);
+
+        this.$refs.video.srcObject = null;
+        this.source = null;
       });
-      videoElem.srcObject = null;
     },
     // Stop the video
     stop() {

@@ -96,26 +96,30 @@ module.exports = Component.exports
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   name: 'vue-web-cam',
   data: function data() {
     return {
-      stream: '',
-      source: '',
+      source: null,
       canvas: null,
       camerasListEmitted: false,
       cameras: []
     };
   },
-
   props: {
     width: {
       type: [Number, String],
@@ -143,24 +147,34 @@ exports.default = {
     }
   },
   watch: {
-    deviceId: function deviceId(id) {
+    deviceId: function(id) {
       this.changeCamera(id);
     }
   },
   mounted: function mounted() {
     this.setupMedia();
   },
-
   methods: {
     legacyGetUserMediaSupport: function legacyGetUserMediaSupport() {
       return function (constraints) {
-        var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+        // First get ahold of the legacy getUserMedia, if present
+        var getUserMedia =
+          navigator.getUserMedia ||
+          navigator.webkitGetUserMedia ||
+          navigator.mozGetUserMedia ||
+          navigator.msGetUserMedia ||
+          navigator.oGetUserMedia;
 
+        // Some browsers just don't implement it - return a rejected promise with an error
+        // to keep a consistent interface
         if (!getUserMedia) {
-          return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+          return Promise.reject(
+            new Error('getUserMedia is not implemented in this browser')
+          );
         }
 
-        return new Promise(function (resolve, reject) {
+        // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
+        return new Promise(function(resolve, reject) {
           getUserMedia.call(navigator, constraints, resolve, reject);
         });
       };
@@ -177,79 +191,103 @@ exports.default = {
       this.testMediaAccess();
     },
     loadCameras: function loadCameras() {
-      var _this = this;
+      var this$1 = this;
 
-      navigator.mediaDevices.enumerateDevices().then(function (deviceInfos) {
-        for (var i = 0; i !== deviceInfos.length; ++i) {
-          var deviceInfo = deviceInfos[i];
-          if (deviceInfo.kind === 'videoinput') {
-            _this.cameras.push(deviceInfo);
+      navigator.mediaDevices
+      .enumerateDevices()
+      .then(
+        function (deviceInfos) {
+          for (var i = 0; i !== deviceInfos.length; ++i) {
+            var deviceInfo = deviceInfos[i];
+            if (deviceInfo.kind === 'videoinput') {
+              this$1.cameras.push(deviceInfo);
+            }
           }
         }
-      }).then(function () {
-        if (!_this.camerasListEmitted) {
-          _this.$emit('cameras', _this.cameras);
-          _this.camerasListEmitted = true;
+      )
+      .then(function () {
+        if(!this$1.camerasListEmitted) {
+          this$1.$emit('cameras', this$1.cameras);
+          this$1.camerasListEmitted = true;
         }
-      }).catch(function (error) {
-        return _this.$emit('notsupported', error);
-      });
+      })
+      .catch(function (error) { return this$1.$emit('notsupported', error); });
     },
+    /**
+     * change to a different camera stream, like front and back camera on phones
+     */
     changeCamera: function changeCamera(deviceId) {
       this.stop();
       this.$emit('camera-change', deviceId);
       this.loadCamera(deviceId);
     },
+    /**
+     * load the stream to the
+     */
     loadSrcStream: function loadSrcStream(stream) {
       if ('srcObject' in this.$refs.video) {
+        // new browsers api
         this.$refs.video.srcObject = stream;
       } else {
+        // old broswers
         this.source = window.HTMLMediaElement.srcObject(stream);
       }
 
       this.$emit('started', stream);
     },
+    /**
+     * stop the selected streamed video to change camera
+     */
     stopStreamedVideo: function stopStreamedVideo(videoElem) {
-      var _this2 = this;
+      var this$1 = this;
 
       var stream = videoElem.srcObject;
       var tracks = stream.getTracks();
-
+      
       tracks.forEach(function (track) {
+        // stops the video track
         track.stop();
-        _this2.$emit('stopped', stream);
+        this$1.$emit('stopped', stream);
+
+        this$1.$refs.video.srcObject = null;
+        this$1.source = null;
       });
-      videoElem.srcObject = null;
     },
+    // Stop the video
     stop: function stop() {
-      if (this.$refs.video !== null && this.$refs.video.srcObject) {
+      if(this.$refs.video !== null && this.$refs.video.srcObject) {
         this.stopStreamedVideo(this.$refs.video);
       }
     },
+    // Start the video
     start: function start() {
-      if (this.deviceId) {
+      if(this.deviceId) {
         this.loadCamera(this.deviceId);
       }
     },
+    /**
+     * test access
+     */
     testMediaAccess: function testMediaAccess() {
-      var _this3 = this;
+      var this$1 = this;
 
-      navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
-        return _this3.loadCameras();
-      }).catch(function (error) {
-        return _this3.$emit('error', error);
-      });
+      navigator.mediaDevices
+        .getUserMedia({video: true})
+        .then(function (stream) { return this$1.loadCameras(); })
+        .catch(function (error) { return this$1.$emit('error', error); });
     },
+    /**
+     * load the Camera passed as index!
+     */
     loadCamera: function loadCamera(device) {
-      var _this4 = this;
+      var this$1 = this;
 
-      navigator.mediaDevices.getUserMedia({
-        video: { deviceId: { exact: device } }
-      }).then(function (stream) {
-        return _this4.loadSrcStream(stream);
-      }).catch(function (error) {
-        return _this4.$emit('error', error);
-      });
+      navigator.mediaDevices
+        .getUserMedia({
+          video: { deviceId: { exact: device } }
+        })
+        .then(function (stream) { return this$1.loadSrcStream(stream); })
+        .catch(function (error) { return this$1.$emit('error', error); });
     },
     capture: function capture() {
       return this.getCanvas().toDataURL(this.screenshotFormat);
@@ -257,23 +295,24 @@ exports.default = {
     getCanvas: function getCanvas() {
       var video = this.$refs.video;
       if (!this.ctx) {
-        var _canvas = document.createElement('canvas');
-        _canvas.height = video.videoHeight;
-        _canvas.width = video.videoWidth;
-        this.canvas = _canvas;
+        var canvas$1 = document.createElement('canvas');
+        canvas$1.height = video.videoHeight;
+        canvas$1.width = video.videoWidth;
+        this.canvas = canvas$1;
 
-        this.ctx = _canvas.getContext('2d');
+        this.ctx = canvas$1.getContext('2d');
       }
 
-      var ctx = this.ctx,
-          canvas = this.canvas;
-
+      var ref = this;
+      var ctx = ref.ctx;
+      var canvas = ref.canvas;
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
       return canvas;
     }
   }
-};
+});
+
 
 /***/ }),
 /* 2 */
