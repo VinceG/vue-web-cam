@@ -1,4 +1,4 @@
-import WebCam from "./webcam.vue";
+import WebCam from "./webcam";
 
 const install = function (Vue, opts = {}) {
     if (install.installed) return;

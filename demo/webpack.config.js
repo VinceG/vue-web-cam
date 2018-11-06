@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
   entry: './demo/src/main.js',
@@ -40,9 +41,10 @@ module.exports = {
     ]
   },
   resolve: {
+    extensions: ['.js', '.vue'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      'plugin': path.resolve(__dirname, "../src/index.js")
+      'vue': 'vue/dist/vue.esm.js',
+      'plugin': path.resolve(__dirname, "../dist/index.js")
     }
   },
   devServer: {
@@ -54,6 +56,7 @@ module.exports = {
   },
   devtool: '#eval-source-map',
   plugins: [
+    new VueLoaderPlugin(),
     new webpack.DefinePlugin({
       'process.env': "'development'"
     }),
