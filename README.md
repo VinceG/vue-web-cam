@@ -63,6 +63,7 @@ npm run dev
 | notsupported   | error    | emitted when the browser does not support this feature        |
 | cameras        | cameras  | emitted when a list of all cameras available is loaded        |
 | camera-change  | deviceId | emitted when camera change occurs                             |
+| video-live     | stream   | emitted when video is started                                 |
 
 ### Methods
 
