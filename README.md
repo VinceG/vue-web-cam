@@ -73,6 +73,14 @@ npm run dev
 | start          | void     | Programatically Start the camera after stopping it (relies on deviceId prop passed to the component)                     |
 | stop           | void     | Programatically stop the camera      |
 
+## Contributing
+
+If you'd like to help make this project better you can help with the following tasks:
+
+* Tests - This project needs a way to test the functionality using a javascript testing solution (Jest as an example)
+* Examples - Additional Examples of usage might be helpful to others.
+* Project Website - Perhaps launch a project website (on Github Pages) that'll showcase the plugin, Demo, Usage instructions, configuration etc..
+
 ## License
 
 MIT
