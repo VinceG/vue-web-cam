@@ -4,7 +4,9 @@
         :height="height"
         :src="source"
         :autoplay="autoplay"
-        :playsinline="playsinline"/>
+        :playsinline="playsinline"
+        :defaultCamera="defaultCamera"
+  />
 </template>
 
 <script>
@@ -42,6 +44,10 @@ export default {
     playsinline: {
       type: Boolean,
       default: true
+    },
+    defaultCamera: {
+        type: String,
+        default: 'backCamera'
     }
   },
   watch: {
@@ -163,8 +169,9 @@ export default {
      * test access
      */
     testMediaAccess() {
+      const constraints = this.defaultCamera === 'backCamera' ? {video: {facingMode: {exact: "environment"}}} : {video: true}
       navigator.mediaDevices
-        .getUserMedia({video: {facingMode:{exact: 'environment'}}})
+        .getUserMedia(constraints)
         .then(stream => this.loadCameras())
         .catch(error => this.$emit('error', error));
     },

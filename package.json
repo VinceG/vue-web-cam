@@ -1,28 +1,17 @@
 {
-  "name": "vue-web-cam",
-  "version": "1.3.0",
-  "description": "Webcam component for Vuejs applications",
+  "name": "vuejs-web-cam",
+  "version": "0.0.1",
+  "description": "Webcam component for Vuejs applications with back camera as default. This is a fork from: Mohammad Shoriful Islam Ronju <https://github.com/smronju>",
+  "keywords": "webcam, cam, vue, vue.js, vuejs, snapshot, picture, photo, phone",
   "main": "dist/index.js",
   "author": {
-    "name": "Mohammad Shoriful Islam Ronju",
-    "email": "smronju@gmail.com",
-    "url": "https://github.com/smronju"
+    "name": "Lou Rectoret",
+    "email": "lourectoret@pm.me",
+    "url": "https://github.com/despertaweb"
   },
-  "contributors": [
-    {
-      "name": "Vincent Gabriel",
-      "email": "vadimg88@gmail.com",
-      "url": "https://github.com/vinceg"
-    },
-    {
-      "name": "Riccardo Giorato",
-      "email": "riccardoemanuele.giorato@gmail.com",
-      "url": "https://github.com/giorat"
-    }
-  ],
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config build/webpack.config.js",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config demo/webpack.config.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --host 0.0.0.0 --public somnus.serveo.net --config demo/webpack.config.js",
     "demo": "cross-env NODE_ENV=production webpack --progress --hide-modules --config demo/webpack.config.js"
   },
   "dependencies": {
@@ -30,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vinceg/vue-web-cam"
+    "url": "https://github.com/DespertaWeb/vue-web-cam"
   },
   "license": "MIT",
   "devDependencies": {
