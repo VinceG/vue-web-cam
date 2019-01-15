@@ -137,7 +137,7 @@ export default {
     stopStreamedVideo(videoElem) {
       let stream = videoElem.srcObject;
       let tracks = stream.getTracks();
-      
+
       tracks.forEach(track => {
         // stops the video track
         track.stop();
@@ -164,7 +164,7 @@ export default {
      */
     testMediaAccess() {
       navigator.mediaDevices
-        .getUserMedia({video: true})
+        .getUserMedia({video: {facingMode:{exact: 'environment'}}})
         .then(stream => this.loadCameras())
         .catch(error => this.$emit('error', error));
     },
