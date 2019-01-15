@@ -52,7 +52,7 @@
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.5.7",
     "webpack": "^2.2.0",
-    "webpack-dev-server": "^2.2.0",
+    "webpack-dev-server": ">=3.1.11",
     "webpack-merge": "^0.14.1"
   },
   "engines": {
