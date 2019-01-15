@@ -89,8 +89,8 @@ export default {
     onStart() {
       this.$refs.webcam.start();
     },
-    onError(error, stream) {
-      console.log('On Error Event', error, stream);
+    onError(error) {
+      console.log('On Error Event', error);
     },
     onCameras(cameras) {
       this.devices = cameras;
