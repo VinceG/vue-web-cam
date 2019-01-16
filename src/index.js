@@ -5,7 +5,7 @@ const install = function(Vue, opts = {}) {
   Vue.component(WebCam.name, WebCam);
 };
 
-module.exports = {
+export default {
   WebCam,
   install
 };
