@@ -126,6 +126,10 @@ export default {
         // old broswers
         this.source = window.HTMLMediaElement.srcObject(stream);
       }
+      // Emit video start/live event
+      this.$refs.video.onloadedmetadata = () => {
+        this.$emit('video-live', stream);
+      };
 
       this.$emit("started", stream);
     },
