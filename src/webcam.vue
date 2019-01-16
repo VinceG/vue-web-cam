@@ -128,7 +128,7 @@ export default {
       }
       // Emit video start/live event
       this.$refs.video.onloadedmetadata = () => {
-        this.$emit('video-live', stream);
+        this.$emit("video-live", stream);
       };
 
       this.$emit("started", stream);
