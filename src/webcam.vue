@@ -92,8 +92,8 @@ export default {
       navigator.mediaDevices
         .enumerateDevices()
         .then(deviceInfos => {
-          for (var i = 0; i !== deviceInfos.length; ++i) {
-            var deviceInfo = deviceInfos[i];
+          for (let i = 0; i !== deviceInfos.length; ++i) {
+            let deviceInfo = deviceInfos[i];
             if (deviceInfo.kind === "videoinput") {
               this.cameras.push(deviceInfo);
             }
