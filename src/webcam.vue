@@ -34,6 +34,13 @@ export default {
     playsinline: {
       type: Boolean,
       default: true
+    },
+    resolution: {
+      type: Object,
+      default: null,
+      validator: value => {
+        return value.height && value.width
+      }
     }
   },
   data() {
@@ -165,8 +172,17 @@ export default {
      * test access
      */
     testMediaAccess() {
+
+      let constraints = { video: true };
+
+      if(this.resolution) {
+        constraints.video = {};
+        constraints.video.height = this.resolution.height;
+        constraints.video.width = this.resolution.width;
+      }
+
       navigator.mediaDevices
-        .getUserMedia({ video: true })
+        .getUserMedia(constraints)
         .then(stream => this.loadCameras())
         .catch(error => this.$emit("error", error));
     },
@@ -174,10 +190,16 @@ export default {
      * load the Camera passed as index!
      */
     loadCamera(device) {
+
+      let constraints = { video: { deviceId: { exact: device }}};
+
+      if(this.resolution) {
+        constraints.video.height = this.resolution.height;
+        constraints.video.width = this.resolution.width;
+      } 
+
       navigator.mediaDevices
-        .getUserMedia({
-          video: { deviceId: { exact: device } }
-        })
+        .getUserMedia(constraints)
         .then(stream => this.loadSrcStream(stream))
         .catch(error => this.$emit("error", error));
     },
