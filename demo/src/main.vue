@@ -49,7 +49,7 @@
 
 <script>
 import { WebCam } from "vue-web-cam";
-import { find, head } from "lodash";
+
 export default {
   name: "App",
   components: {
@@ -65,7 +65,7 @@ export default {
   },
   computed: {
     device: function() {
-      return find(this.devices, n => n.deviceId == this.deviceId);
+      return this.devices.find(n => n.deviceId === this.deviceId);
     }
   },
   watch: {
@@ -74,7 +74,7 @@ export default {
     },
     devices: function() {
       // Once we have a list select the first one
-      let first = head(this.devices);
+      const [first, ...tail] = devices;
       if (first) {
         this.camera = first.deviceId;
         this.deviceId = first.deviceId;
