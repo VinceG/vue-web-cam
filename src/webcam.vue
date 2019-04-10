@@ -39,7 +39,7 @@ export default {
       type: Object,
       default: null,
       validator: value => {
-        return value.height && value.width
+        return value.height && value.width;
       }
     }
   },
@@ -172,10 +172,9 @@ export default {
      * test access
      */
     testMediaAccess() {
-
       let constraints = { video: true };
 
-      if(this.resolution) {
+      if (this.resolution) {
         constraints.video = {};
         constraints.video.height = this.resolution.height;
         constraints.video.width = this.resolution.width;
@@ -190,13 +189,12 @@ export default {
      * load the Camera passed as index!
      */
     loadCamera(device) {
+      let constraints = { video: { deviceId: { exact: device } } };
 
-      let constraints = { video: { deviceId: { exact: device }}};
-
-      if(this.resolution) {
+      if (this.resolution) {
         constraints.video.height = this.resolution.height;
         constraints.video.width = this.resolution.width;
-      } 
+      }
 
       navigator.mediaDevices
         .getUserMedia(constraints)

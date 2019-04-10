@@ -1,11 +1,15 @@
 import WebCam from "./webcam";
 
-const install = function(Vue, opts = {}) {
-  if (install.installed) return;
-  Vue.component(WebCam.name, WebCam);
-};
+function plugin(Vue) {
+  Vue.component("vue-web-cam", WebCam);
+}
 
-export default {
-  WebCam,
-  install
-};
+// Install by default if using the script tag
+if (typeof window !== "undefined" && window.Vue) {
+  window.Vue.use(plugin);
+}
+
+export default plugin;
+const version = "__VERSION__";
+// Export all components too
+export { WebCam, version };

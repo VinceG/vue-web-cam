@@ -5,14 +5,14 @@
         <h2>Current Camera</h2>
         <code v-if="device">{{ device.label }}</code>
         <div class="border">
-          <web-cam ref="webcam"
-                   :device-id="deviceId"
-                   width="100%"
-                   @started="onStarted" 
-                   @stopped="onStopped" 
-                   @error="onError"
-                   @cameras="onCameras"
-                   @camera-change="onCameraChange" />
+          <vue-web-cam ref="webcam"
+                       :device-id="deviceId"
+                       width="100%"
+                       @started="onStarted" 
+                       @stopped="onStopped" 
+                       @error="onError"
+                       @cameras="onCameras"
+                       @camera-change="onCameraChange" />
         </div>
 
         <div class="row">
@@ -53,7 +53,7 @@ import { WebCam } from "vue-web-cam";
 export default {
   name: "App",
   components: {
-    WebCam
+    "vue-web-cam": WebCam
   },
   data() {
     return {
@@ -74,7 +74,7 @@ export default {
     },
     devices: function() {
       // Once we have a list select the first one
-      const [first, ...tail] = devices;
+      const [first, ...tail] = this.devices;
       if (first) {
         this.camera = first.deviceId;
         this.deviceId = first.deviceId;

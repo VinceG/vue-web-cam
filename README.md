@@ -29,12 +29,27 @@ yarn add vue-web-cam
 
 ```javascript
 import Vue from 'vue'
-import WebCam from 'vue-web-cam'
+import WebCam from "../../src";
+Vue.use(WebCam);
 
-Vue.use(WebCam)
+
+<vue-web-cam ... />
+
 // or
-import {WebCam} from 'vue-web-cam'
-Vue.component(WebCam.name, WebCam)
+import { WebCam } from "vue-web-cam";
+
+components: {
+    WebCam
+}
+
+<web-cam ... />
+
+components: {
+    'vue-web-cam': WebCam
+}
+
+<vue-web-cam ... />
+
 ```
 
 ## Testing & Dev

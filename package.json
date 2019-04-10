@@ -1,6 +1,6 @@
 {
   "name": "vue-web-cam",
-  "version": "1.4.4",
+  "version": "1.5.0",
   "description": "Webcam component for Vuejs applications",
   "main": "dist/index.js",
   "author": {
@@ -13,11 +13,6 @@
       "name": "Vincent Gabriel",
       "email": "vadimg88@gmail.com",
       "url": "https://github.com/vinceg"
-    },
-    {
-      "name": "Riccardo Giorato",
-      "email": "riccardoemanuele.giorato@gmail.com",
-      "url": "https://github.com/giorat"
     }
   ],
   "scripts": {

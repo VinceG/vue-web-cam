@@ -1,6 +1,7 @@
 var path = require("path");
 var webpack = require("webpack");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const { version } = require("../package.json");
 
 module.exports = {
   mode: "production",
@@ -50,6 +51,7 @@ module.exports = {
   plugins: [
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
+      __VERSION__: JSON.stringify(version),
       "process.env": {
         NODE_ENV: '"production"'
       }

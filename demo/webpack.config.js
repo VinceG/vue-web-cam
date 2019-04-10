@@ -2,6 +2,7 @@ var path = require("path");
 var webpack = require("webpack");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const { version } = require("../package.json");
 
 module.exports = {
   mode: "development",
@@ -49,8 +50,7 @@ module.exports = {
     }
   },
   devServer: {
-    historyApiFallback: true,
-    noInfo: true
+    historyApiFallback: true
   },
   performance: {
     hints: false
@@ -59,6 +59,7 @@ module.exports = {
   plugins: [
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
+      __VERSION__: JSON.stringify(version),
       "process.env": "'development'"
     }),
     new webpack.HotModuleReplacementPlugin(),
@@ -75,6 +76,7 @@ if (process.env.NODE_ENV === "production") {
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
+      __VERSION__: JSON.stringify(version),
       "process.env": {
         NODE_ENV: '"production"'
       }
