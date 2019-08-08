@@ -59,6 +59,9 @@ export default {
   mounted() {
     this.setupMedia();
   },
+  beforeDestroy(){
+    this.stop();
+  },
   methods: {
     legacyGetUserMediaSupport() {
       return constraints => {
