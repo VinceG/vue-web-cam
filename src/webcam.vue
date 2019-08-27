@@ -59,6 +59,9 @@ export default {
   mounted() {
     this.setupMedia();
   },
+  beforeDestroy(){
+    this.stop();
+  },
   methods: {
     legacyGetUserMediaSupport() {
       return constraints => {
@@ -182,7 +185,14 @@ export default {
 
       navigator.mediaDevices
         .getUserMedia(constraints)
-        .then(stream => this.loadCameras())
+        .then(stream => {
+          //Make sure to stop this MediaStream
+          let tracks = stream.getTracks();
+          tracks.forEach(track => {
+            track.stop();
+          });
+          this.loadCameras();
+        })
         .catch(error => this.$emit("error", error));
     },
     /**
