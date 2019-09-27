@@ -171,6 +171,16 @@ export default {
         this.loadCamera(this.deviceId);
       }
     },
+    pause(){
+      if (this.$refs.video !== null && this.$refs.video.srcObject) {
+        this.$refs.video.pause();
+      }
+    },
+    resume(){
+      if (this.$refs.video !== null && this.$refs.video.srcObject) {
+        this.$refs.video.play();
+      }
+    },
     /**
      * test access
      */
