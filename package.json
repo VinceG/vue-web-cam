@@ -15,6 +15,10 @@
       "url": "https://github.com/vinceg"
     }
   ],
+  "files": [
+    "dist",
+    "nuxt"
+  ],
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config build/webpack.config.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config demo/webpack.config.js",
