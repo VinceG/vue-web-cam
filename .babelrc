@@ -1,11 +1,9 @@
 {
-    "presets": [
-        ["@babel/preset-env", { "modules": false } ]
-    ],
-    "plugins": [
-        "@babel/plugin-syntax-dynamic-import",
-        "@babel/plugin-transform-runtime",
-        "@babel/plugin-transform-object-assign",
-        "@babel/plugin-proposal-object-rest-spread"
-    ]
+  "presets": [["@babel/preset-env", { "modules": false }]],
+  "plugins": [
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-transform-object-assign",
+    "@babel/plugin-proposal-object-rest-spread"
+  ]
 }

@@ -2,7 +2,11 @@
   "name": "vue-web-cam",
   "version": "1.7.1",
   "description": "Webcam component for Vuejs applications",
-  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vinceg/vue-web-cam"
+  },
+  "license": "MIT",
   "author": {
     "name": "Mohammad Shoriful Islam Ronju",
     "email": "smronju@gmail.com",
@@ -15,19 +19,15 @@
       "url": "https://github.com/vinceg"
     }
   ],
+  "main": "dist/index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config build/webpack.config.js",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config demo/webpack.config.js",
-    "demo": "cross-env NODE_ENV=production webpack --progress --hide-modules --config demo/webpack.config.js"
+    "demo": "cross-env NODE_ENV=production webpack --progress --hide-modules --config demo/webpack.config.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config demo/webpack.config.js"
   },
   "dependencies": {
     "vue": "^2.5.17"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vinceg/vue-web-cam"
-  },
-  "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
