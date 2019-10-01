@@ -58,15 +58,16 @@ npm run dev
 
 ### Props
 
-| prop             | type    | default      | notes                                              |
-| ---------------- | ------- | ------------ | -------------------------------------------------- |
-| height           | number  | 500          | height of video element                            |
-| width            | number  | 500          | width of video element                             |
-| autoplay         | boolean | true         | autoplay attribute                                 |
-| screenshotFormat | string  | 'image/jpeg' | format of screenshot                               |
-| deviceId         | string  | null         | currently selected camera                          |
-| playsinline      | boolean | true         | playsinline of video element                       |
-| resolution       | object  | null         | object with width and height for camera resolution |
+| prop              | type    | default      | notes                                              |
+| ----------------- | ------- | ------------ | -------------------------------------------------- |
+| height            | number  | 500          | height of video element                            |
+| width             | number  | 500          | width of video element                             |
+| autoplay          | boolean | true         | autoplay attribute                                 |
+| screenshotFormat  | string  | 'image/jpeg' | format of screenshot                               |
+| selectFirstDevice | boolean | false        | select first device when avaialble                 |
+| deviceId          | string  | null         | currently selected camera                          |
+| playsinline       | boolean | true         | playsinline of video element                       |
+| resolution        | object  | null         | object with width and height for camera resolution |
 
 ### Events
 

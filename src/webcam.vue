@@ -30,6 +30,10 @@ export default {
       type: String,
       default: "image/jpeg"
     },
+    selectFirstDevice: {
+      type: Boolean,
+      default: false
+    },
     deviceId: {
       type: String,
       default: null
@@ -130,6 +134,10 @@ export default {
         })
         .then(() => {
           if (!this.camerasListEmitted) {
+            if (this.selectFirstDevice && this.cameras.length > 0) {
+              this.deviceId = this.cameras[0].deviceId;
+            }
+
             this.$emit("cameras", this.cameras);
             this.camerasListEmitted = true;
           }
