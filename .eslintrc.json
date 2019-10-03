@@ -1,44 +1,47 @@
 {
-    "env": {
-        "browser": true,
-        "commonjs": true,
-        "es6": true,
-        "node": true
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:vue/recommended",
-        "plugin:import/errors",
-        "plugin:import/warnings"
-    ],
-    "parserOptions": {
-        "parser": "babel-eslint",
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2017,
-        "sourceType": "module"
-    },
-    "plugins": ["vue", "prettier"],
-    "rules": {
-        "no-const-assign": "warn",
-        "no-this-before-super": "warn",
-        "no-undef": "warn",
-        "no-unreachable": "warn",
-        "no-unused-vars": "off",
-        "constructor-super": "warn",
-        "valid-typeof": "warn",
-        "import/no-unresolved": "off",
-        "import/no-unassigned-import": "warn",
-        "semi": 0,
-        "no-console": "off",
-        "prettier/prettier": "error",
-        "vue/max-attributes-per-line": [2, {
-          "singleline": 2,
-          "multiline": {
-            "max": 1,
-            "allowFirstLine": true
-          }
-        }]
-    }
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
+  "plugins": ["vue", "prettier"],
+  "rules": {
+    "no-const-assign": "warn",
+    "no-this-before-super": "warn",
+    "no-undef": "warn",
+    "no-unreachable": "warn",
+    "no-unused-vars": "off",
+    "constructor-super": "warn",
+    "valid-typeof": "warn",
+    "import/no-unresolved": "off",
+    "import/no-unassigned-import": "warn",
+    "semi": 0,
+    "no-console": "off",
+    "prettier/prettier": "error",
+    "vue/max-attributes-per-line": [
+      2,
+      {
+        "singleline": 2,
+        "multiline": {
+          "max": 1,
+          "allowFirstLine": true
+        }
+      }
+    ]
   }
+}
