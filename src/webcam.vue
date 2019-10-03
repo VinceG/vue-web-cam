@@ -1,15 +1,18 @@
 <template>
-  <video ref="video"
-         :width="width"
-         :height="height"
-         :src="source"
-         :autoplay="autoplay"
-         :playsinline="playsinline"/>
+  <video
+    ref="video"
+    :width="width"
+    :height="height"
+    :src="source"
+    :autoplay="autoplay"
+    :playsinline="playsinline"
+  />
 </template>
 
 <script>
 export default {
   name: "VueWebCam",
+
   props: {
     width: {
       type: [Number, String],
@@ -27,6 +30,10 @@ export default {
       type: String,
       default: "image/jpeg"
     },
+    selectFirstDevice: {
+      type: Boolean,
+      default: false
+    },
     deviceId: {
       type: String,
       default: null
@@ -43,6 +50,7 @@ export default {
       }
     }
   },
+
   data() {
     return {
       source: null,
@@ -51,18 +59,25 @@ export default {
       cameras: []
     };
   },
+
   watch: {
     deviceId: function(id) {
       this.changeCamera(id);
     }
   },
+
   mounted() {
     this.setupMedia();
   },
-  beforeDestroy(){
+
+  beforeDestroy() {
     this.stop();
   },
+
   methods: {
+    /**
+     * get user media
+     */
     legacyGetUserMediaSupport() {
       return constraints => {
         // First get ahold of the legacy getUserMedia, if present
@@ -87,6 +102,10 @@ export default {
         });
       };
     },
+
+    /**
+     * setup media
+     */
     setupMedia() {
       if (navigator.mediaDevices === undefined) {
         navigator.mediaDevices = {};
@@ -98,6 +117,10 @@ export default {
 
       this.testMediaAccess();
     },
+
+    /**
+     * load available cameras
+     */
     loadCameras() {
       navigator.mediaDevices
         .enumerateDevices()
@@ -111,12 +134,17 @@ export default {
         })
         .then(() => {
           if (!this.camerasListEmitted) {
+            if (this.selectFirstDevice && this.cameras.length > 0) {
+              this.deviceId = this.cameras[0].deviceId;
+            }
+
             this.$emit("cameras", this.cameras);
             this.camerasListEmitted = true;
           }
         })
         .catch(error => this.$emit("notsupported", error));
     },
+
     /**
      * change to a different camera stream, like front and back camera on phones
      */
@@ -125,6 +153,7 @@ export default {
       this.$emit("camera-change", deviceId);
       this.loadCamera(deviceId);
     },
+
     /**
      * load the stream to the
      */
@@ -143,6 +172,7 @@ export default {
 
       this.$emit("started", stream);
     },
+
     /**
      * stop the selected streamed video to change camera
      */
@@ -159,28 +189,35 @@ export default {
         this.source = null;
       });
     },
-    // Stop the video
+
+    // stop the video
     stop() {
       if (this.$refs.video !== null && this.$refs.video.srcObject) {
         this.stopStreamedVideo(this.$refs.video);
       }
     },
-    // Start the video
+
+    // start the video
     start() {
       if (this.deviceId) {
         this.loadCamera(this.deviceId);
       }
     },
-    pause(){
+
+    // pause the video
+    pause() {
       if (this.$refs.video !== null && this.$refs.video.srcObject) {
         this.$refs.video.pause();
       }
     },
-    resume(){
+
+    // resume the video
+    resume() {
       if (this.$refs.video !== null && this.$refs.video.srcObject) {
         this.$refs.video.play();
       }
     },
+
     /**
      * test access
      */
@@ -205,8 +242,9 @@ export default {
         })
         .catch(error => this.$emit("error", error));
     },
+
     /**
-     * load the Camera passed as index!
+     * load the camera passed as index!
      */
     loadCamera(device) {
       let constraints = { video: { deviceId: { exact: device } } };
@@ -221,9 +259,17 @@ export default {
         .then(stream => this.loadSrcStream(stream))
         .catch(error => this.$emit("error", error));
     },
+
+    /**
+     * capture screenshot
+     */
     capture() {
       return this.getCanvas().toDataURL(this.screenshotFormat);
     },
+
+    /**
+     * get canvas
+     */
     getCanvas() {
       let video = this.$refs.video;
       if (!this.ctx) {
