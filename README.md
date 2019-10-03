@@ -50,6 +50,16 @@ components: {
 <vue-web-cam ... />
 ```
 
+## Nuxt.js
+
+Add `vue-web-cam/nuxt` to modules section of `nuxt.config.js`
+
+```javascript
+{
+  modules: ['vue-web-cam/nuxt']
+}
+```
+
 ## Testing & Dev
 
 ```bash

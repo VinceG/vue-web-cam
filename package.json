@@ -20,6 +20,10 @@
     }
   ],
   "main": "dist/index.js",
+  "files": [
+    "dist",
+    "nuxt"
+  ],
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config build/webpack.config.js",
     "demo": "cross-env NODE_ENV=production webpack --progress --hide-modules --config demo/webpack.config.js",
