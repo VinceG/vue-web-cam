@@ -95,7 +95,7 @@ npm run dev
 
 | name         | param    | notes                                                                                                 |
 | ------------ | -------- | ----------------------------------------------------------------------------------------------------- |
-| capture      | void     | Capture the current image through the webcam as base64 encoded string                                 |
+| capture      | void     | Capture the current image through the webcam as a base64 encoded dataUri                                 |
 | changeCamera | deviceId | change the currently selected camera. Must pass in the device ID                                      |
 | start        | void     | Programmatically Start the camera after stopping it (relies on deviceId prop passed to the component) |
 | stop         | void     | Programmatically stop the camera                                                                      |
