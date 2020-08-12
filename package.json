@@ -20,8 +20,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config build/webpack.config.js",
     "demo": "cross-env NODE_ENV=production webpack --progress --hide-modules --config demo/webpack.config.js",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config demo/webpack.config.js",
-    "postinstall": "cd ./node_modules/vue-web-cam && npm install && npm run build"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config demo/webpack.config.js"
   },
   "dependencies": {
     "vue": "^2.6.10"
