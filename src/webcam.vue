@@ -30,6 +30,10 @@ export default {
       type: String,
       default: "image/jpeg"
     },
+    autosetup: {
+      type: Boolean,
+      default: true
+    },
     selectFirstDevice: {
       type: Boolean,
       default: false
@@ -48,6 +52,10 @@ export default {
       validator: value => {
         return value.height && value.width;
       }
+    },
+    canvasEl: {
+      type: Object,
+      default: null
     }
   },
 
@@ -67,7 +75,9 @@ export default {
   },
 
   mounted() {
-    this.setupMedia();
+    if(this.autosetup){
+      this.setupMedia();
+    }
   },
 
   beforeDestroy() {
@@ -273,7 +283,12 @@ export default {
     getCanvas() {
       let video = this.$refs.video;
       if (!this.ctx) {
-        let canvas = document.createElement("canvas");
+        let canvas;
+        if(this.$refs.canvasEl){
+          canvas = this.$refs.canvasEl;
+        }else{
+          canvas = document.createElement("canvas");
+        }
         canvas.height = video.videoHeight;
         canvas.width = video.videoWidth;
         this.canvas = canvas;
@@ -285,7 +300,31 @@ export default {
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
       return canvas;
+    },
+
+    /**
+     * getVideo
+     */
+    getVideo() {
+      return this.$refs.video;
+    },
+
+    /**
+     * getThisCanvas
+     */
+    getThisCanvas() {
+      this.getCanvas();
+      return this.canvas;
+    },
+
+    /**
+     * getCanvasContext
+     */
+    getCanvasContext() {
+      this.initCanvas();
+      return this.ctx;
     }
+
   }
 };
 </script>
