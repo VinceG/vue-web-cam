@@ -1,6 +1,6 @@
 {
   "name": "vue-web-cam",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "Webcam component for Vuejs applications",
   "repository": {
     "type": "git",
@@ -20,7 +20,8 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config build/webpack.config.js",
     "demo": "cross-env NODE_ENV=production webpack --progress --hide-modules --config demo/webpack.config.js",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config demo/webpack.config.js"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config demo/webpack.config.js",
+    "postinstall": "cd ./node_modules/vue-web-cam && npm install && npm run build"
   },
   "dependencies": {
     "vue": "^2.6.10"
