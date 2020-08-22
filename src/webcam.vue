@@ -75,7 +75,7 @@ export default {
   },
 
   mounted() {
-    if(this.autosetup){
+    if (this.autosetup) {
       this.setupMedia();
     }
   },
@@ -284,9 +284,9 @@ export default {
       let video = this.$refs.video;
       if (!this.ctx) {
         let canvas;
-        if(this.$refs.canvasEl){
+        if (this.$refs.canvasEl) {
           canvas = this.$refs.canvasEl;
-        }else{
+        } else {
           canvas = document.createElement("canvas");
         }
         canvas.height = video.videoHeight;
@@ -321,10 +321,9 @@ export default {
      * getCanvasContext
      */
     getCanvasContext() {
-      this.initCanvas();
+      this.getCanvas();
       return this.ctx;
     }
-
   }
 };
 </script>
