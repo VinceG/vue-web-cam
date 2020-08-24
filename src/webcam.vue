@@ -1,6 +1,7 @@
 <template>
   <video
     ref="video"
+    :id="vid"
     :width="width"
     :height="height"
     :src="source"
@@ -14,6 +15,17 @@ export default {
   name: "VueWebCam",
 
   props: {
+    vid: {
+      type: String,
+      default:
+        "vid_" +
+        Math.random()
+          .toString(36)
+          .substring(2, 15) +
+        Math.random()
+          .toString(36)
+          .substring(2, 15)
+    },
     width: {
       type: [Number, String],
       default: "100%"
@@ -308,7 +320,12 @@ export default {
     getVideo() {
       return this.$refs.video;
     },
-
+    /**
+     * getVideoId
+     */
+    getVid() {
+      return this.vid;
+    },
     /**
      * getThisCanvas
      */

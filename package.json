@@ -1,6 +1,6 @@
 {
   "name": "@nickfan/vue-web-cam",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "description": "forked version of vue-web-cam Webcam component for Vuejs applications",
   "repository": {
     "type": "git",
