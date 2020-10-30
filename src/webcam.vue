@@ -1,6 +1,7 @@
 <template>
   <video
     ref="video"
+    :id="vid"
     :width="width"
     :height="height"
     :src="source"
@@ -14,6 +15,17 @@ export default {
   name: "VueWebCam",
 
   props: {
+    vid: {
+      type: String,
+      default:
+        "vid_" +
+        Math.random()
+          .toString(36)
+          .substring(2, 15) +
+        Math.random()
+          .toString(36)
+          .substring(2, 15)
+    },
     width: {
       type: [Number, String],
       default: "100%"
@@ -29,6 +41,10 @@ export default {
     screenshotFormat: {
       type: String,
       default: "image/jpeg"
+    },
+    autosetup: {
+      type: Boolean,
+      default: true
     },
     selectFirstDevice: {
       type: Boolean,
@@ -48,6 +64,10 @@ export default {
       validator: value => {
         return value.height && value.width;
       }
+    },
+    canvasEl: {
+      type: Object,
+      default: null
     }
   },
 
@@ -67,7 +87,9 @@ export default {
   },
 
   mounted() {
-    this.setupMedia();
+    if (this.autosetup) {
+      this.setupMedia();
+    }
   },
 
   beforeDestroy() {
@@ -273,7 +295,12 @@ export default {
     getCanvas() {
       let video = this.$refs.video;
       if (!this.ctx) {
-        let canvas = document.createElement("canvas");
+        let canvas;
+        if (this.$refs.canvasEl) {
+          canvas = this.$refs.canvasEl;
+        } else {
+          canvas = document.createElement("canvas");
+        }
         canvas.height = video.videoHeight;
         canvas.width = video.videoWidth;
         this.canvas = canvas;
@@ -285,6 +312,34 @@ export default {
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
       return canvas;
+    },
+
+    /**
+     * getVideo
+     */
+    getVideo() {
+      return this.$refs.video;
+    },
+    /**
+     * getVideoId
+     */
+    getVid() {
+      return this.vid;
+    },
+    /**
+     * getThisCanvas
+     */
+    getThisCanvas() {
+      this.getCanvas();
+      return this.canvas;
+    },
+
+    /**
+     * getCanvasContext
+     */
+    getCanvasContext() {
+      this.getCanvas();
+      return this.ctx;
     }
   }
 };

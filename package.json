@@ -1,10 +1,10 @@
 {
-  "name": "vue-web-cam",
-  "version": "1.9.0",
-  "description": "Webcam component for Vuejs applications",
+  "name": "@nickfan/vue-web-cam",
+  "version": "1.9.4",
+  "description": "forked version of vue-web-cam Webcam component for Vuejs applications",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vinceg/vue-web-cam"
+    "url": "https://github.com/nickfan/vue-web-cam"
   },
   "license": "MIT",
   "author": {
